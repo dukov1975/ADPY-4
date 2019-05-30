@@ -1,3 +1,4 @@
+# в двух экземплярах
 from salary2.people import get_employees as all_emp
 from salary2.salary import *
 
