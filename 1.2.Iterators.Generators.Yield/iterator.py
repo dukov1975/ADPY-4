@@ -5,8 +5,8 @@ import wikipedia
 class Country:
 
     def __init__(self):
-        with open('countries.json') as jdata:
-            self.data = list(json.load(jdata))
+        with open('countries.json') as j_data:
+            self.data = list(json.load(j_data))
 
     def __iter__(self):
         return self
