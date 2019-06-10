@@ -7,5 +7,6 @@ def gen_hash(file_name):
             yield hashlib.md5(r_line.encode('UTF-8')).hexdigest()
 
 
+
 for item in gen_hash('country.urls'):
     print(item)
