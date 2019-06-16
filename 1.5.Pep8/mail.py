@@ -6,7 +6,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-class MailSendRecieve:
+class MailSendReceive:
 
     def __init__(self, login, password, smtp_server, imap_server):
         self.login = login
@@ -46,10 +46,10 @@ class MailSendRecieve:
 
 
 def main():
-    mail_worker = MailSendRecieve('muder75@gmail.com', 'Duke050675_', 'smtp.gmail.com', 'imap.gmail.com')
-    # mail_worker.send_message(['muder75@gmail.com', 'dukov@icloudpocket.ru'],
-    #                          'Пробная тема по отправке сообщения',
-    #                          'Само сообщение, вот все что нужно ...')
+    mail_worker = MailSendReceive('muder75@gmail.co', '**********', 'smtp.gmail.com', 'imap.gmail.com')
+    mail_worker.send_message(['muder75@gmail.com', 'dukov@icloudpocket.ru'],
+                             'Пробная тема по отправке сообщения',
+                             'Само сообщение, вот все что нужно ...')
     mail_worker.receive_message()
 
 
