@@ -12,7 +12,7 @@ def log(file_log):
                                f'kwargs{kwargs} '
                                f'результат {result}\n')
 
-            return func
+            return result
         return wrap_log
     return func_decorator
 
