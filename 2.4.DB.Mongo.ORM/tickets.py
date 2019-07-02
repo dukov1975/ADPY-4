@@ -44,16 +44,15 @@ class Ticket:
         Найти билеты по имени исполнителя (в том числе – по подстроке),
         и вернуть их по возрастанию цены
         """
-        if re.match('[а-яa-z]+', name) is not None:
-            regex = re.compile(name, re.I)
-            for record in self.db.tickets.find({'Исполнитель': regex}).sort('Цена', pymongo.ASCENDING):
-                print(record)
+        regex = re.compile(re.escape(name), re.I)
+        for record in self.db.tickets.find({'Исполнитель': regex}).sort('Цена', pymongo.ASCENDING):
+            print(record)
 
 
 if __name__ == '__main__':
     mongodbTickets = Ticket()
-    mongodbTickets.read_data('artists.csv')
+    # mongodbTickets.read_data('artists.csv')
     print('==================================================')
-    mongodbTickets.find_cheapest()
+    # mongodbTickets.find_cheapest()
     print('==================================================')
-    mongodbTickets.find_by_name('о')
+    mongodbTickets.find_by_name('Enter')
