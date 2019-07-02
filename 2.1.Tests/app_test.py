@@ -1,13 +1,14 @@
 import unittest
-from src.app import *
 import os, json
+from src.app import *
 
 
 class TestApp(unittest.TestCase):
-    def SetUp(self):
+
+    def setUp(self):
         current_path = str(os.path.dirname(os.path.abspath(__file__)))
-        f_directories = os.path.join(current_path, 'fixtures/directories.json')
-        f_documents = os.path.join(current_path, 'fixtures/documents.json')
+        f_directories = os.path.join(current_path, 'src/fixtures/directories.json')
+        f_documents = os.path.join(current_path, 'src/fixtures/documents.json')
         with open(f_documents, 'r') as out_docs:
             self.documents = json.load(out_docs)
         with open(f_directories, 'r') as out_dirs:
@@ -26,6 +27,5 @@ class TestApp(unittest.TestCase):
                     append_doc_to_shelf(doc_number, f'Полка {doc_number}')
 
 
-if __name__ == '__main__':
-
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()
