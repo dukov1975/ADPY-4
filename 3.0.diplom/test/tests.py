@@ -32,7 +32,7 @@ class Test(unittest.TestCase):
 
     def test_find_and_sort_photos(self):
         vkinder = Vkinder('418095195')
-        for_photos = vkinder.sort_users(vkinder.find_users())
+        for_photos = vkinder.sort_users(vkinder.find_users(35, 45))
         self.assertEqual(len(vkinder.find_and_sort_photos(for_photos)), 10)
 
     def test_find_and_sort_photosv_is_list(self):
