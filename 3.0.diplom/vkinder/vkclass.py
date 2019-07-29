@@ -8,19 +8,20 @@ from db.mysql import MySQLdb
 class User:
 
     def __init__(self, id, info, weight=0):
-
         self.id = id
         self.info = info
         self.weight = weight
 
 
 class Vkinder(MySQLdb):
+
     TOKEN = ''
     VERSION = '5.101'
 
+
     def __init__(self, main_user_id):
         super().__init__()
-        with open('/home/dukov/PycharmProjects/ADPY/token') as token:
+        with open('./token') as token:
             coded_token = token.readline()
             self.TOKEN = base64.b64decode(coded_token).decode('utf-8')
         response_main_user = requests.get('https://api.vk.com/method/users.get', {
@@ -29,7 +30,7 @@ class Vkinder(MySQLdb):
             'fields': 'bdate, sex, interests, music, books, city',
             'v': self.VERSION
         })
-
+        self.check_table_exists()
         main_user_info = response_main_user.json()['response'][0]
         self.main_user = User(main_user_info.pop('id'), main_user_info)
 
@@ -92,10 +93,10 @@ class Vkinder(MySQLdb):
         return finded_users[0:10]
 
     def insert_db(self, final):
-        for user in final:
-            for photo in user.get('photos'):
-                # print(photo.items())
-                self.insert_to_db([user['id'], photo['id'], photo['likes']])
+            for user in final:
+                for photo in user.get('photos'):
+                    self.insert_to_db([user['id'], photo['id'], photo['likes']])
+
 
     def find_and_sort_photos(self, finded_users):
         sorted_users = []

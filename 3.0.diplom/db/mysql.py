@@ -12,14 +12,15 @@ class MySQLdb:
         return conn
 
     def insert_to_db(self, args):
+
         try:
             conn = self.__connect()
             cursor = conn.cursor()
             cursor.execute(('INSERT INTO users (id, photo, likes) VALUES (%s, %s, %s)'), args)
             conn.commit()
+            conn.close()
         except mysql.connector.Error as error:
             print(error)
-        conn.close()
 
     def select_from_db(self, args):
 
@@ -28,15 +29,33 @@ class MySQLdb:
             cursor = conn.cursor()
             cursor.execute(('SELECT * FROM users WHERE id=%s'), args)
             result = cursor.fetchall()
+            conn.close()
         except mysql.connector.Error as error:
             print(error)
-        conn.close()
         return result
 
     def create_table(self):
-        """
-        CREATE TABLE users` (
-                     id INT NOT NULL,
-                     photo INT NOT NULL DEFAULT 0,
-                     likes INT NOT NULL DEFAULT 0);
-        """
+        try:
+            conn = self.__connect()
+            cursor = conn.cursor()
+            cursor.execute('CREATE TABLE users ('
+                           'id INT NOT NULL, '
+                           'photo INT NOT NULL DEFAULT 0, '
+                           'likes INT NOT NULL DEFAULT 0)')
+            conn.commit()
+            conn.close()
+        except mysql.connector.Error as error:
+            print(error)
+
+    def check_table_exists(self):
+        try:
+            conn = self.__connect()
+            cursor = conn.cursor()
+            cursor.execute('SELECT count(*) FROM users')
+            cursor.fetchall()
+            conn.close()
+        except mysql.connector.Error as error:
+            if error.errno == 1146:
+                self.create_table()
+
+
